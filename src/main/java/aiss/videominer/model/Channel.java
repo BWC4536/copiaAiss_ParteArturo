@@ -1,9 +1,11 @@
 package aiss.videominer.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +34,7 @@ public class Channel {
     private String createdTime;
 
     @JsonProperty("videos")
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "channelId")
+    @OneToMany(mappedBy = "channel", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @NotNull(message = "Channel videos cannot be null")
     private List<Video> videos;
 

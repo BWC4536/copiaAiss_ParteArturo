@@ -1,7 +1,11 @@
 package aiss.videominer.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 /**
  * @author Juan C. Alonso
@@ -16,13 +20,22 @@ public class User {
     private Long id;
 
     @JsonProperty("name")
+    @NotBlank(message = "User name cannot be blank")
+    @Size(min = 1, max = 255, message = "User name must be between 1 and 255 characters")
     private String name;
 
     @JsonProperty("user_link")
+    @NotBlank(message = "User link cannot be blank")
+    @Size(max = 1000, message = "User link cannot exceed 1000 characters")
     private String user_link;
 
     @JsonProperty("picture_link")
+    @Size(max = 1000, message = "Picture link cannot exceed 1000 characters")
     private String picture_link;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "author", fetch = FetchType.LAZY)
+    private Video video;
 
     public Long getId() {
         return id;
@@ -56,6 +69,14 @@ public class User {
         this.picture_link = picture_link;
     }
 
+    public Video getVideo() {
+        return video;
+    }
+
+    public void setVideo(Video video) {
+        this.video = video;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -63,6 +84,7 @@ public class User {
                 ", name='" + name + '\'' +
                 ", user_link='" + user_link + '\'' +
                 ", picture_link='" + picture_link + '\'' +
+                ", video=" + (video != null ? video.getId() : "null") +
                 '}';
     }
 

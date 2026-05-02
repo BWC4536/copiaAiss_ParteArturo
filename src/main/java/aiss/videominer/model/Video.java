@@ -1,9 +1,11 @@
 package aiss.videominer.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
@@ -30,18 +32,23 @@ public class Video {
     @NotEmpty(message = "Video release time cannot be empty")
     private String releaseTime;
 
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "channel_id", nullable = false)
+    @NotNull(message = "Video must belong to a channel")
+    private Channel channel;
+
     @JsonProperty("user")
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "author_id", nullable = true)
     private User author;
 
     @JsonProperty("comments")
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "videoId")
+    @OneToMany(mappedBy = "video", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Comment> comments;
 
     @JsonProperty("captions")
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "videoId")
+    @OneToMany(mappedBy = "video", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Caption> captions;
 
     public String getId() {
@@ -74,6 +81,14 @@ public class Video {
 
     public void setReleaseTime(String releaseTime) {
         this.releaseTime = releaseTime;
+    }
+
+    public Channel getChannel() {
+        return channel;
+    }
+
+    public void setChannel(Channel channel) {
+        this.channel = channel;
     }
 
     public User getAuthor() {
