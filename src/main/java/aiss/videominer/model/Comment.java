@@ -21,12 +21,12 @@ public class Comment {
 
     @JsonProperty("text")
     @Column(columnDefinition="TEXT")
-    @NotBlank(message = "Comment text cannot be blank")
+    //@NotBlank(message = "Comment text cannot be blank")
     @Size(max = 5000, message = "Comment text cannot exceed 5000 characters")
     private String text;
 
     @JsonProperty("createdOn")
-    @NotBlank(message = "Comment creation date cannot be blank")
+    //@NotBlank(message = "Comment creation date cannot be blank")
     private String createdOn;
 
     @JsonIgnore

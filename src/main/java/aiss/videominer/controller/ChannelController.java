@@ -60,10 +60,6 @@ public class ChannelController {
                 // Establecer referencia inversa del video al canal
                 video.setChannel(channel);
 
-                // Establecer referencias bidireccionales para el author
-                if (video.getAuthor() != null) {
-                    video.getAuthor().setVideo(video);
-                }
 
                 // Establecer referencias bidireccionales para comments
                 if (video.getComments() != null && !video.getComments().isEmpty()) {
@@ -140,6 +136,9 @@ public class ChannelController {
         }
         if (channelDetails.getCreatedTime() != null) {
             _channel.setCreatedTime(channelDetails.getCreatedTime());
+        }
+        if (channelDetails.getSubscriberCount() != null) {
+            _channel.setSubscriberCount(channelDetails.getSubscriberCount());
         }
 
         // Establecer referencias bidireccionales para los videos anidados

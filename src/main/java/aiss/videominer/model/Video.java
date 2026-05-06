@@ -32,6 +32,12 @@ public class Video {
     @NotEmpty(message = "Video release time cannot be empty")
     private String releaseTime;
 
+    @JsonProperty("viewCount")
+    private Integer viewCount;
+
+    @JsonProperty("likeCount")
+    private Integer likeCount;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "channel_id", nullable = false)
@@ -39,7 +45,7 @@ public class Video {
     private Channel channel;
 
     @JsonProperty("user")
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "author_id", nullable = true)
     private User author;
 
@@ -126,5 +132,21 @@ public class Video {
                 ", comments=" + comments +
                 ", captions=" + captions +
                 '}';
+    }
+
+    public Integer getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(Integer viewCount) {
+        this.viewCount = viewCount;
+    }
+
+    public Integer getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(Integer likeCount) {
+        this.likeCount = likeCount;
     }
 }

@@ -33,6 +33,9 @@ public class Channel {
     @NotEmpty(message = "Channel creation time cannot be empty")
     private String createdTime;
 
+    @JsonProperty("subscriberCount")
+    private Integer subscriberCount;
+
     @JsonProperty("videos")
     @OneToMany(mappedBy = "channel", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @NotNull(message = "Channel videos cannot be null")
@@ -91,5 +94,13 @@ public class Channel {
                 ", createdTime='" + createdTime + '\'' +
                 ", videos=" + videos +
                 '}';
+    }
+
+    public Integer getSubscriberCount() {
+        return subscriberCount;
+    }
+
+    public void setSubscriberCount(Integer subscriberCount) {
+        this.subscriberCount = subscriberCount;
     }
 }

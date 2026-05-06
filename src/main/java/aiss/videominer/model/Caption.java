@@ -20,12 +20,12 @@ public class Caption {
     private String id;
 
     @JsonProperty("name")
-    @NotBlank(message = "Caption name cannot be blank")
+    // @NotBlank(message = "Caption name cannot be blank")
     @Size(max = 1000, message = "Caption name cannot exceed 1000 characters")
     private String name;
 
     @JsonProperty("language")
-    @NotBlank(message = "Caption language cannot be blank")
+    // @NotBlank(message = "Caption language cannot be blank")
     @Size(min = 1, max = 50, message = "Caption language must be between 1 and 50 characters")
     private String language;
 

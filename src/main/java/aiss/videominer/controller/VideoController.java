@@ -54,11 +54,6 @@ public class VideoController {
             throw new ConflictException("Video already exists with id: " + video.getId());
         }
 
-        // Establecer referencias bidireccionales para el author
-        if (video.getAuthor() != null) {
-            video.getAuthor().setVideo(video);
-        }
-
         // Establecer referencias bidireccionales para los comments anidados
         if (video.getComments() != null && !video.getComments().isEmpty()) {
             for (Comment comment : video.getComments()) {
@@ -152,11 +147,11 @@ public class VideoController {
         if (videoDetails.getReleaseTime() != null) {
             _video.setReleaseTime(videoDetails.getReleaseTime());
         }
-
-        // Establecer referencias bidireccionales para el author
-        if (videoDetails.getAuthor() != null) {
-            videoDetails.getAuthor().setVideo(_video);
-            _video.setAuthor(videoDetails.getAuthor());
+        if (videoDetails.getViewCount() != null) {
+            _video.setViewCount(videoDetails.getViewCount());
+        }
+        if (videoDetails.getLikeCount() != null) {
+            _video.setLikeCount(videoDetails.getLikeCount());
         }
 
         // Establecer referencias bidireccionales para los comments anidados
