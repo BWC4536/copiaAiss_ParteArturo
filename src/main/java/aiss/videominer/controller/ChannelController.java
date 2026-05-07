@@ -116,7 +116,7 @@ public class ChannelController {
         description = "Actualiza los datos de un canal existente"
     )
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "204", description = "Canal actualizado exitosamente"),
+        @ApiResponse(responseCode = "200", description = "Canal actualizado exitosamente"),
         @ApiResponse(responseCode = "404", description = "Canal no encontrado"),
         @ApiResponse(responseCode = "400", description = "Datos inválidos")
     })

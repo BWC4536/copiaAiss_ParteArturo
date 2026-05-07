@@ -156,7 +156,7 @@ public class VideoController {
         description = "Actualiza los datos de un vídeo existente"
     )
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "204", description = "Vídeo actualizado exitosamente"),
+        @ApiResponse(responseCode = "200", description = "Vídeo actualizado exitosamente"),
         @ApiResponse(responseCode = "404", description = "Vídeo no encontrado"),
         @ApiResponse(responseCode = "400", description = "Datos inválidos")
     })
