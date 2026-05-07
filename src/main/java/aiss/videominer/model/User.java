@@ -10,9 +10,12 @@ import jakarta.validation.constraints.Size;
 public class User {
 
     @Id
-    @JsonProperty("id")
+   // @JsonProperty("id") para evitar conflicto con externalId
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @JsonProperty("id")
+    private String externalId; // Aquí guardamos el "a3b9..." que nos manda PeerTube
 
     @JsonProperty("name")
     @NotBlank(message = "User name cannot be blank")
@@ -30,6 +33,9 @@ public class User {
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+
+    public String getExternalId() { return externalId; }
+    public void setExternalId(String externalId) { this.externalId = externalId; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
