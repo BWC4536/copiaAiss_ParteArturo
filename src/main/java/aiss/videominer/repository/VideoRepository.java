@@ -16,6 +16,6 @@ public interface VideoRepository extends JpaRepository<Video, String> {
 
     Page<Video> findById(String id, Pageable pageable);
 
-    @Query(value = "SELECT * FROM Video WHERE channelId = :channelId", nativeQuery = true)
+    @Query(value = "SELECT * FROM Video WHERE channel_id = :channelId", nativeQuery = true)
     List<Video> findByChannel_Id(@Param("channelId") String channelId);
 }
