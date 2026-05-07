@@ -161,7 +161,6 @@ public class VideoController {
         @ApiResponse(responseCode = "400", description = "Datos inválidos")
     })
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public Video updateVideo(@PathVariable String id, @Valid @RequestBody Video videoDetails) {
         Optional<Video> video = videoRepository.findById(id);
         if(video.isEmpty()){
@@ -189,7 +188,8 @@ public class VideoController {
             for (Comment comment : videoDetails.getComments()) {
                 comment.setVideo(_video);
             }
-            _video.setComments(videoDetails.getComments());
+            _video.getComments().clear();
+            _video.getComments().addAll(videoDetails.getComments());
         }
 
         // Establecer referencias bidireccionales para los captions anidados
@@ -197,7 +197,8 @@ public class VideoController {
             for (Caption caption : videoDetails.getCaptions()) {
                 caption.setVideo(_video);
             }
-            _video.setCaptions(videoDetails.getCaptions());
+            _video.getCaptions().clear();
+            _video.getCaptions().addAll(videoDetails.getCaptions());
         }
 
         return videoRepository.save(_video);
@@ -216,7 +217,7 @@ public class VideoController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteVideo(@PathVariable String id) {
         if(!videoRepository.existsById(id)){
-            throw new ResourceNotFoundException("Channel not found with id: " + id);
+            throw new ResourceNotFoundException("Video not found with id: " + id);
         }
         videoRepository.deleteById(id);
     }

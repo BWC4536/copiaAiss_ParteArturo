@@ -121,7 +121,6 @@ public class ChannelController {
         @ApiResponse(responseCode = "400", description = "Datos inválidos")
     })
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public Channel updateChannel(@PathVariable String id, @Valid @RequestBody Channel channelDetails) {
         Optional<Channel> channel = channelRepository.findById(id);
         if(channel.isEmpty()){
@@ -161,7 +160,8 @@ public class ChannelController {
                     }
                 }
             }
-            _channel.setVideos(channelDetails.getVideos());
+            _channel.getVideos().clear();
+            _channel.getVideos().addAll(channelDetails.getVideos());
         }
 
         return channelRepository.save(_channel);
