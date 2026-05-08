@@ -161,7 +161,7 @@ public class VideoController {
         @ApiResponse(responseCode = "400", description = "Datos inválidos")
     })
     @PutMapping("/{id}")
-    public Video updateVideo(@PathVariable String id, @Valid @RequestBody Video videoDetails) {
+    public Video updateVideo(@PathVariable String id, @RequestBody Video videoDetails) {
         Optional<Video> video = videoRepository.findById(id);
         if(video.isEmpty()){
             throw new ResourceNotFoundException("Video not found with id: " + id);
