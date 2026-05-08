@@ -144,12 +144,11 @@ public class ChannelController {
         description = "Actualiza los datos de un canal existente"
     )
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "204", description = "Canal actualizado exitosamente"),
+        @ApiResponse(responseCode = "200", description = "Canal actualizado exitosamente"),
         @ApiResponse(responseCode = "404", description = "Canal no encontrado"),
         @ApiResponse(responseCode = "400", description = "Datos inválidos")
     })
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public Channel updateChannel(@PathVariable String id, @Valid @RequestBody Channel channelDetails) {
         Optional<Channel> channel = channelRepository.findById(id);
         if(channel.isEmpty()){
@@ -189,7 +188,8 @@ public class ChannelController {
                     }
                 }
             }
-            _channel.setVideos(channelDetails.getVideos());
+            _channel.getVideos().clear();
+            _channel.getVideos().addAll(channelDetails.getVideos());
         }
 
         return channelRepository.save(_channel);
