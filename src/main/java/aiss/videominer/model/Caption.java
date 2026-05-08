@@ -16,7 +16,7 @@ public class Caption {
 
     @Id
     @JsonProperty("id")
-    @NotBlank(message = "Caption ID cannot be blank")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
     @JsonProperty("name")
