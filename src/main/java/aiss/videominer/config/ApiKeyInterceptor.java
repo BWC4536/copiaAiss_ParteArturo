@@ -15,25 +15,23 @@ public class ApiKeyInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        // Vamos a proteger solamente las peticiones que modifican datos (POST, PUT, DELETE)
         String method = request.getMethod();
         if ("GET".equalsIgnoreCase(method)) {
-            return true; // Dejamos pasar las peticiones GET sin pedir clave
+            return true;
         }
 
         String authHeader = request.getHeader("Authorization");
 
-        // Comprobamos que el header exista y empiece por Bearer
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
             if (token.equals(validApiKey)) {
-                return true; // El token es correcto
+                return true;
             }
         }
 
-        // Si no hay token o es incorrecto, devolvemos error 401
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        response.getWriter().write("Unauthorized: Falta la API Key o es incorrecta. Usa el header 'Authorization: Bearer <API-KEY>'");
+        response.setContentType("application/json");  // <-- añade esto
+        response.getWriter().write("{\"status\":401,\"message\":\"Unauthorized: Falta la API Key o es incorrecta\"}");
         return false;
     }
 }

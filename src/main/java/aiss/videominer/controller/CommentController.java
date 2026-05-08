@@ -3,6 +3,7 @@ package aiss.videominer.controller;
 import aiss.videominer.exception.BadRequestException;
 import aiss.videominer.exception.ConflictException;
 import aiss.videominer.exception.ResourceNotFoundException;
+import aiss.videominer.model.Channel;
 import aiss.videominer.model.Comment;
 import aiss.videominer.repository.CommentRepository;
 import aiss.videominer.repository.VideoRepository;
@@ -12,6 +13,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -76,8 +81,31 @@ public class CommentController {
         @ApiResponse(responseCode = "200", description = "Lista de comentarios devuelta exitosamente")
     })
     @GetMapping
-    public ResponseEntity<List<Comment>> getAllComments() {
-        return ResponseEntity.ok(commentRepository.findAll());
+    public ResponseEntity<List<Comment>> getAllComments(@RequestParam(defaultValue = "0") int page,
+                                                        @RequestParam(defaultValue = "10") int size,
+                                                        @RequestParam(required = false) String id,
+                                                        @RequestParam(required = false) String order) {
+        Pageable paging;
+
+        if(order != null){
+            if(order.startsWith("-")){
+                paging = PageRequest.of(page, size, Sort.by(order.substring(1)).descending());
+            } else {
+                paging = PageRequest.of(page, size, Sort.by(order).ascending());
+            }
+        } else{
+            paging = PageRequest.of(page, size);
+        }
+
+        Page<Comment> pageComments;
+
+        if(id != null){
+            pageComments = commentRepository.findById(id, paging);
+        } else {
+            pageComments = commentRepository.findAll(paging);
+        }
+
+        return ResponseEntity.ok(pageComments.getContent());
     }
 
     @Operation(
