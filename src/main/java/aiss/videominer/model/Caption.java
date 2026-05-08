@@ -16,7 +16,7 @@ public class Caption {
 
     @Id
     @JsonProperty("id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
     private String id;
 
     @JsonProperty("name")

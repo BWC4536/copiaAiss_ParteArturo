@@ -164,9 +164,7 @@ public class ChannelController {
         if (channelDetails.getCreatedTime() != null) {
             _channel.setCreatedTime(channelDetails.getCreatedTime());
         }
-        if (channelDetails.getSubscriberCount() != null) {
-            _channel.setSubscriberCount(channelDetails.getSubscriberCount());
-        }
+
 
         // Establecer referencias bidireccionales para los videos anidados
         if (channelDetails.getVideos() != null && !channelDetails.getVideos().isEmpty()) {

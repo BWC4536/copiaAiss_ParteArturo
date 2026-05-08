@@ -32,11 +32,6 @@ public class Video {
     @NotEmpty(message = "Video release time cannot be empty")
     private String releaseTime;
 
-    @JsonProperty("viewCount")
-    private Integer viewCount;
-
-    @JsonProperty("likeCount")
-    private Integer likeCount;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
@@ -134,19 +129,5 @@ public class Video {
                 '}';
     }
 
-    public Integer getViewCount() {
-        return viewCount;
-    }
 
-    public void setViewCount(Integer viewCount) {
-        this.viewCount = viewCount;
-    }
-
-    public Integer getLikeCount() {
-        return likeCount;
-    }
-
-    public void setLikeCount(Integer likeCount) {
-        this.likeCount = likeCount;
-    }
 }

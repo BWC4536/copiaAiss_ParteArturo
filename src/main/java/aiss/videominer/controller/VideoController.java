@@ -176,12 +176,7 @@ public class VideoController {
         if (videoDetails.getReleaseTime() != null) {
             _video.setReleaseTime(videoDetails.getReleaseTime());
         }
-        if (videoDetails.getViewCount() != null) {
-            _video.setViewCount(videoDetails.getViewCount());
-        }
-        if (videoDetails.getLikeCount() != null) {
-            _video.setLikeCount(videoDetails.getLikeCount());
-        }
+
 
         // Establecer referencias bidireccionales para los comments anidados
         if (videoDetails.getComments() != null && !videoDetails.getComments().isEmpty()) {
